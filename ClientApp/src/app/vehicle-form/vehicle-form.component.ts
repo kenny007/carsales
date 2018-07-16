@@ -12,7 +12,10 @@ export class VehicleFormComponent implements OnInit {
   //all the methods available U don't even need it as by default identifiers in C# have d type any
   models : any[];
   features: any[];
-  vehicle: any = {}
+  vehicle: any = {
+    features: [],
+    contact: {}
+  }
   constructor(private vehicleService: VehicleService) { }
 
   ngOnInit() {
@@ -24,5 +27,18 @@ export class VehicleFormComponent implements OnInit {
    var selectedMake = this.makes.find(m=>m.id == this.vehicle.makeId);
    this.models = selectedMake ? selectedMake.models: [];
    delete this.vehicle.modelId;
+  }
+
+  onFeatureToggle(featureId, $event){
+    if($event.target.checked)
+    this.vehicle.features.push(featureId);
+     else{
+       var index = this.vehicle.features.indexOf(featureId);
+       this.vehicle.features.splice(index,1);
+     }
+  }
+  submit(){
+    this.vehicleService.create(this.vehicle)
+        .subscribe(x => console.log(x));
   }
 }
