@@ -108,7 +108,7 @@ export class VehicleFormComponent implements OnInit {
       .subscribe(x => console.log(x)
         //this.toastsManager.error('Error','An unexpected error happened!')
       );
-     }
-      
+    }
+
   }
 }
