@@ -22,7 +22,7 @@ export class VehicleService {
   }
 
   getVehicle(id){
-    return this.httpClient.get(this.vehiclesEndpoint + id);
+    return this.httpClient.get(this.vehiclesEndpoint + '/' + id);
   }
 
   update(vehicle: SaveVehicle) {
