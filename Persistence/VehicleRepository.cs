@@ -52,11 +52,27 @@ namespace playground.Persistence
                     if(queryObj.ModelId.HasValue)
                     query = query.Where(v => v.ModelId == queryObj.ModelId.Value);
 
-                    if(queryObj.SortBy == "make")
-                    query = (queryObj.IsSortAscending) ? query.OrderBy(v=>v.Model.Make.Name) :  query.OrderByDescending(v=> v.Model.Make.Name);
+                 
+                    //Expression<Func<Vehicle, object>> func = v => v.ContactName;
+                    var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>>>()
+                    {
+                        ["make"] = v => v.Model.Make.Name,
+                        ["model"] = v => v.Model.Name,
+                        ["contactName"] = v => v.ContactName,
+                        ["id"] = v => v.Id
+                    };
+                    
+                    if(queryObj.IsSortAscending)
+                    query = query.OrderBy(columnsMap[queryObj.SortBy]);
+                    else
+                    query = query.OrderByDescending(columnsMap[queryObj.SortBy]);
+
+
+                    // if(queryObj.SortBy == "make")
+                    // query = (queryObj.IsSortAscending) ? query.OrderBy(v=>v.Model.Make.Name) :  query.OrderByDescending(v=> v.Model.Make.Name);
                   
-                    if(queryObj.SortBy == "model")
-                    query = (queryObj.IsSortAscending) ? query.OrderBy(v=>v.Model.Name) :  query.OrderByDescending(v=> v.Model.Name);
+                    // if(queryObj.SortBy == "model")
+                    // query = (queryObj.IsSortAscending) ? query.OrderBy(v=>v.Model.Name) :  query.OrderByDescending(v=> v.Model.Name);
 
                   return await query.ToListAsync();
         }
