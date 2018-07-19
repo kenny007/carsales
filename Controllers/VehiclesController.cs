@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using playground.Controllers.Resources;
 using playground.Models;
 using playground.Core;
+using System.Collections.Generic;
 
 namespace playground.Controllers
 {
@@ -82,6 +83,7 @@ namespace playground.Controllers
 
             return Ok(id);
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetVehicle(int id)
         {
@@ -95,5 +97,14 @@ namespace playground.Controllers
 
             return Ok(vehicleResource);
         }
+
+        [HttpGet]
+        public async Task<IEnumerable<VehicleResource>> GetVehicles()
+        {
+          var vehicles = await repository.GetVehicles();
+
+           return mapper.Map<IEnumerable<Vehicle>, IEnumerable<VehicleResource>>(vehicles);
+        }
+        
     }
 }
