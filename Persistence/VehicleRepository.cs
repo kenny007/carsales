@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using playground.Core;
 using playground.Core.Models;
+using playground.Extensions;
 using playground.Models;
 
 namespace playground.Persistence
@@ -58,24 +59,19 @@ namespace playground.Persistence
                     {
                         ["make"] = v => v.Model.Make.Name,
                         ["model"] = v => v.Model.Name,
-                        ["contactName"] = v => v.ContactName,
-                        ["id"] = v => v.Id
+                        ["contactName"] = v => v.ContactName
                     };
-                    
-                    if(queryObj.IsSortAscending)
-                    query = query.OrderBy(columnsMap[queryObj.SortBy]);
-                    else
-                    query = query.OrderByDescending(columnsMap[queryObj.SortBy]);
-
-
-                    // if(queryObj.SortBy == "make")
-                    // query = (queryObj.IsSortAscending) ? query.OrderBy(v=>v.Model.Make.Name) :  query.OrderByDescending(v=> v.Model.Make.Name);
                   
-                    // if(queryObj.SortBy == "model")
-                    // query = (queryObj.IsSortAscending) ? query.OrderBy(v=>v.Model.Name) :  query.OrderByDescending(v=> v.Model.Name);
+                  query = query.ApplyOrdering(queryObj, columnsMap);
 
                   return await query.ToListAsync();
         }
         
+        private IQueryable<Vehicle> ApplyOrdering(VehicleQuery queryObj, IQueryable<Vehicle> query, Dictionary<string, Expression<Func<Vehicle, object>>> columnsMap){
+             if (queryObj.IsSortAscending)
+                  return  query = query.OrderBy(columnsMap[queryObj.SortBy]);
+                    else
+                  return   query = query.OrderByDescending(columnsMap[queryObj.SortBy]);
+        }
     }
 }
