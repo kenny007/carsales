@@ -7,6 +7,7 @@ using playground.Controllers.Resources;
 using playground.Models;
 using playground.Core;
 using System.Collections.Generic;
+using playground.Core.Models;
 
 namespace playground.Controllers
 {
@@ -99,9 +100,12 @@ namespace playground.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<VehicleResource>> GetVehicles()
+        public async Task<IEnumerable<VehicleResource>> GetVehicles(FilterResource filterResource)
         {
-          var vehicles = await repository.GetVehicles();
+          //the type the mapping returns is the destination
+          var filter =  mapper.Map<FilterResource, Filter>(filterResource);
+          
+          var vehicles = await repository.GetVehicles(filter);
 
            return mapper.Map<IEnumerable<Vehicle>, IEnumerable<VehicleResource>>(vehicles);
         }

@@ -103,7 +103,17 @@ export class VehicleFormComponent implements OnInit {
         timeout: 5000
       });
       this.router.navigate(['/'])
-    });
+    }
+    // , err => {
+    //    this.toastyService.error({
+    //      title: 'Error',
+    //      msg:'An unhandled error occured',
+    //      theme:'bootstrap',
+    //      showClose: true,
+    //      timeout: 5000
+    //    })
+    // }
+  );
   }
 
   delete(){
@@ -113,4 +123,5 @@ export class VehicleFormComponent implements OnInit {
        this.router.navigate(['/']);
     })
   }
+
 }

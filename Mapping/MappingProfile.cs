@@ -1,5 +1,6 @@
 using AutoMapper;
 using playground.Controllers.Resources;
+using playground.Core.Models;
 using playground.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace playground.Mapping
             //These maps are unidirectional just Make to MakeResource  
 
             //API Resource to Domain
+            CreateMap<FilterResource, Filter>();
             CreateMap<SaveVehicleResource, Vehicle>()
             .ForMember(v => v.Id, opt => opt.Ignore())
             .ForMember(v => v.ContactName, opt => opt.MapFrom(vr => vr.Contact.Name))         
