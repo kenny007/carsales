@@ -63,6 +63,8 @@ namespace playground.Persistence
                     };
                   
                   query = query.ApplyOrdering(queryObj, columnsMap);
+                   //here paging is done in SQL Server not in memory
+                   query = query.ApplyPaging(queryObj);
 
                   return await query.ToListAsync();
         }

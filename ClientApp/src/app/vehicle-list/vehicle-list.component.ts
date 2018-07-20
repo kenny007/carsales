@@ -11,7 +11,7 @@ export class VehicleListComponent implements OnInit {
   vehicles: Vehicle[];
   makes: KeyValuePair[];
   query: any = {};
-  columns: [
+  columns = [
     { title:'Id' },
     { title:'Contact Name', key:'contactName', isSortable: true },
     { title:'Make', key:'make', isSortable: true },

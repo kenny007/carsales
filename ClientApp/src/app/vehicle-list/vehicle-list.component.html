@@ -25,10 +25,10 @@
 
 <table class="table">
   <thead>
-    <tr>
+  <tr>
    <th *ngFor="let c of columns">
-     <div *ngIf="c.isSortable" (click)="sortBy(c.key)">
-      {{c.title}}
+    <div *ngIf="c.isSortable" (click)="sortBy(c.key)">
+       {{c.title}}
       <i *ngIf="query.sortBy === c.key" 
       class="fa"
       [class.fa-sort-asc]="query.isSortAscending"
@@ -36,7 +36,7 @@
     </div>
     <div *ngIf="!c.isSortable">{{ c.title }}</div>
     </th>
-    </tr>
+  </tr>
   </thead>
   <tbody>
     <tr *ngFor="let v of vehicles">
