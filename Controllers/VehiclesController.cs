@@ -100,14 +100,14 @@ namespace playground.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<VehicleResource>> GetVehicles(VehicleQueryResource filterResource)
+        public async Task<QueryResultResource<VehicleResource>> GetVehicles(VehicleQueryResource filterResource)
         {
           //the type the mapping returns is the destination
           var filter =  mapper.Map<VehicleQueryResource, VehicleQuery>(filterResource);
           
-          var vehicles = await repository.GetVehicles(filter);
+          var queryResult = await repository.GetVehicles(filter);
 
-           return mapper.Map<IEnumerable<Vehicle>, IEnumerable<VehicleResource>>(vehicles);
+           return mapper.Map<QueryResult<Vehicle>, QueryResultResource<VehicleResource>>(queryResult);
         }
         
     }
