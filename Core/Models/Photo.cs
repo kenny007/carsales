@@ -7,7 +7,7 @@ namespace playground.Core.Models
        public int Id { get; set; }
        [Required]
        [StringLength(255)]
-       public int FileName { get; set; }
+       public string FileName { get; set; }
 
     }
 }
