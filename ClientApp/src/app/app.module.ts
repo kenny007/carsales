@@ -1,3 +1,4 @@
+import { PhotoService } from './services/photo.service';
 import * as Raven from 'raven-js';
 import { VehicleService } from './services/vehicle.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -52,7 +53,8 @@ Raven.config('https://ca1c153518344cef847a78715779246f@sentry.io/1244394').insta
   ],
   providers: [
     {provide: ErrorHandler, useClass:AppErrorHandler}, 
-    VehicleService
+    VehicleService,
+    PhotoService
   ],
   bootstrap: [AppComponent]
 })
