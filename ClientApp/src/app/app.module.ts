@@ -52,7 +52,7 @@ Raven.config('https://ca1c153518344cef847a78715779246f@sentry.io/1244394').insta
     ])
   ],
   providers: [
-    {provide: ErrorHandler, useClass:AppErrorHandler}, 
+    { provide: ErrorHandler, useClass:AppErrorHandler }, 
     VehicleService,
     PhotoService
   ],

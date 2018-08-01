@@ -104,16 +104,6 @@ export class VehicleFormComponent implements OnInit {
       });
       this.router.navigate(['/vehicles/', vehicle.id])
     });
-    // , err => {
-    //    this.toastyService.error({
-    //      title: 'Error',
-    //      msg:'An unhandled error occured',
-    //      theme:'bootstrap',
-    //      showClose: true,
-    //      timeout: 5000
-    //    })
-    // }
- 
   }
 
 }

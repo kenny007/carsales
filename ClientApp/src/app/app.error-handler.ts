@@ -12,20 +12,21 @@ export class AppErrorHandler implements ErrorHandler{
         
     }
 
-    handleError(error: any): void {
-        if(!isDevMode)
-        Raven.captureException(error.originalError || error);
-        else
-        throw error;
-
-         this.ngZone.run(() => {
+    handleError(error: any): void {     
+        this.ngZone.run(() => {
             this.toastyService.error({
                 title:'Error',
                 msg:'An unexpected error happened. ',
                 theme:'bootstrap',
                 showClose: true,
                 timeout: 5000
-         })
-    });
+            })
+        });
+
+        if(!isDevMode)
+        Raven.captureException(error.originalError || error);
+        else
+        throw error;
+
    }
 }
