@@ -19,6 +19,7 @@ import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 import { PaginationComponent } from './shared/pagination/pagination.component';
 import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
 import { ViewFormComponent } from './view-form/view-form.component';
+import { AuthService } from './services/auth.service';
 
 Raven.config('https://ca1c153518344cef847a78715779246f@sentry.io/1244394').install();
 
@@ -53,6 +54,7 @@ Raven.config('https://ca1c153518344cef847a78715779246f@sentry.io/1244394').insta
   ],
   providers: [
     { provide: ErrorHandler, useClass:AppErrorHandler }, 
+    AuthService,
     VehicleService,
     PhotoService
   ],

@@ -8,6 +8,7 @@ using playground.Models;
 using playground.Core;
 using System.Collections.Generic;
 using playground.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace playground.Controllers
 {
@@ -26,6 +27,7 @@ namespace playground.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateVehicle([FromBody] SaveVehicleResource vehicleResource)
         {
            // throw new Exception();
@@ -52,6 +54,7 @@ namespace playground.Controllers
             return Ok(result);
         }
         [HttpPut("{id}")] // /api/vehicles/{id}
+        [Authorize]
         public async Task<IActionResult> UpdateVehicle(int id, [FromBody] SaveVehicleResource vehicleResource)
         {
             if(!ModelState.IsValid)
@@ -73,6 +76,7 @@ namespace playground.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteVehicle(int id)
         {
             var vehicle = await repository.GetVehicle(id, includeRelated: false);

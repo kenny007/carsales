@@ -10,6 +10,7 @@ using playground.Core;
 using playground.Persistence;
 using AutoMapper;
 using playground.Core.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace playground
 {
@@ -49,6 +50,18 @@ namespace playground
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            // 1. Add Authentication Services
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://carsale.auth0.com/";
+                options.Audience = "https://api.carsale.com";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +79,10 @@ namespace playground
 
            // app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            // 2. Enable authentication middleware
+            app.UseAuthentication();
+
             app.UseSpaStaticFiles();
 
             app.UseMvc(routes =>
