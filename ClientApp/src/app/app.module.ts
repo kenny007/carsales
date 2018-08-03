@@ -50,6 +50,7 @@ Raven.config('https://ca1c153518344cef847a78715779246f@sentry.io/1244394').insta
       { path: 'vehicles/:id', component: ViewVehicleComponent },
       { path: 'vehicles', component: VehicleListComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: '**', redirectTo: 'home'}
     ])
   ],
   providers: [
