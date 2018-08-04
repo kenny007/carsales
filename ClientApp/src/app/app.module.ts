@@ -20,6 +20,7 @@ import { PaginationComponent } from './shared/pagination/pagination.component';
 import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
 import { ViewFormComponent } from './view-form/view-form.component';
 import { AuthService } from './services/auth.service';
+import { CallbackComponent } from './callback/callback.component';
 
 Raven.config('https://ca1c153518344cef847a78715779246f@sentry.io/1244394').install();
 
@@ -34,7 +35,8 @@ Raven.config('https://ca1c153518344cef847a78715779246f@sentry.io/1244394').insta
     VehicleListComponent,
     PaginationComponent,
     ViewVehicleComponent,
-    ViewFormComponent
+    ViewFormComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -42,13 +44,13 @@ Raven.config('https://ca1c153518344cef847a78715779246f@sentry.io/1244394').insta
     FormsModule,
     ToastyModule.forRoot(),
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'vehicles/new', component: VehicleFormComponent },
       { path: 'vehicles/edit/:id', component: VehicleFormComponent },
       { path: 'vehicles/:id', component: ViewVehicleComponent },
       { path: 'vehicles', component: VehicleListComponent },
+      { path: 'callback', component: CallbackComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: '**', redirectTo: 'home'}
     ])

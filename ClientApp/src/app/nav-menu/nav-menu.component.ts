@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 })
 export class NavMenuComponent {
 
-  constructor( private authService: AuthService ){}
+  constructor( public auth: AuthService ){}
 
   isExpanded = false;
 

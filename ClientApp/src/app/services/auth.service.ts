@@ -29,6 +29,7 @@ export class AuthService {
         this.auth0.parseHash((err, authResult) => {
           if (authResult && authResult.accessToken && authResult.idToken) {
             window.location.hash = '';
+            console.log(authResult)
             this.setSession(authResult);
             this.router.navigate(['/home']);
           } else if (err) {
