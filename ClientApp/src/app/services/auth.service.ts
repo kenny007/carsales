@@ -3,11 +3,13 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import * as auth0 from 'auth0-js';
+import  Auth0Lock  from 'auth0-lock';
 
 (window as any).global = window;
 
 @Injectable()
 export class AuthService {
+  profile: any;
 
   auth0 = new auth0.WebAuth({
     clientID: 's0EU4jh5aKV2RiV8p2mCxV39bgFA6dTQ',
@@ -18,9 +20,31 @@ export class AuthService {
     scope: 'openid'
   });
 
-  constructor(public router: Router) {}
+  lock = new Auth0Lock(
+    's0EU4jh5aKV2RiV8p2mCxV39bgFA6dTQ',
+    'carsale.auth0.com'
+  );
+  
+
+  constructor(public router: Router) {
+    this.profile = JSON.parse(localStorage.getItem('profile'));
+     debugger;
+    
+     this.lock.on("authenticated", (authResult) => {
+      localStorage.setItem('token', authResult.accessToken);
+   
+      this.lock.getUserInfo(authResult.accessToken, (error, profile) => {
+        if(error)
+        throw error;
+
+        localStorage.setItem('profile', JSON.stringify(profile))
+        this.profile = profile;
+      })
+    })
+  }
 
   public login(): void {
+    console.log(auth0);
     this.auth0.authorize(); //this displays a login widget
   }
 
@@ -31,9 +55,9 @@ export class AuthService {
             window.location.hash = '';
             console.log(authResult)
             this.setSession(authResult);
-            this.router.navigate(['/home']);
+            this.router.navigate(['/vehicles']);
           } else if (err) {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/vehicles']);
             console.log(err);
           }
         });
@@ -65,3 +89,6 @@ export class AuthService {
     
 
 }
+
+
+

@@ -45,7 +45,7 @@ Raven.config('https://ca1c153518344cef847a78715779246f@sentry.io/1244394').insta
     ToastyModule.forRoot(),
     RouterModule.forRoot([
       { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
+      { path: 'home', component: CounterComponent },
       { path: 'vehicles/new', component: VehicleFormComponent },
       { path: 'vehicles/edit/:id', component: VehicleFormComponent },
       { path: 'vehicles/:id', component: ViewVehicleComponent },
