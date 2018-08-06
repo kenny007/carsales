@@ -1,3 +1,5 @@
+import { JwtModule  } from '@auth0/angular-jwt';
+import { AdminComponent } from './admin/admin.component';
 import { PhotoService } from './services/photo.service';
 import * as Raven from 'raven-js';
 import { VehicleService } from './services/vehicle.service';
@@ -24,6 +26,11 @@ import { CallbackComponent } from './callback/callback.component';
 
 Raven.config('https://ca1c153518344cef847a78715779246f@sentry.io/1244394').install();
 
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,11 +43,18 @@ Raven.config('https://ca1c153518344cef847a78715779246f@sentry.io/1244394').insta
     PaginationComponent,
     ViewVehicleComponent,
     ViewFormComponent,
-    CallbackComponent
+    CallbackComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost']
+      }
+    }),
     FormsModule,
     ToastyModule.forRoot(),
     RouterModule.forRoot([
@@ -50,6 +64,7 @@ Raven.config('https://ca1c153518344cef847a78715779246f@sentry.io/1244394').insta
       { path: 'vehicles/edit/:id', component: VehicleFormComponent },
       { path: 'vehicles/:id', component: ViewVehicleComponent },
       { path: 'vehicles', component: VehicleListComponent },
+      { path: 'admin', component: AdminComponent },
       { path: 'callback', component: CallbackComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: '**', redirectTo: 'home'}

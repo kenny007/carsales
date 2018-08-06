@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import * as auth0 from 'auth0-js';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 (window as any).global = window;
 
 @Injectable()
 export class AuthService {
   profile: any;
+  private roles: string[] = [];
 
 
   auth0 = new auth0.WebAuth({
@@ -20,17 +22,20 @@ export class AuthService {
     scope: 'openid profile'
   });
 
-  constructor(public router: Router) {
+  constructor(public router: Router, private jwtHelperService: JwtHelperService ) {
     this.profile = JSON.parse(localStorage.getItem('profile'));
-    const accessToken = localStorage.getItem('access_token');
+    const accessToken = localStorage.getItem('id_token');
     
     if(accessToken){
       const self = this;
+      this.jwtHelperService = new JwtHelperService();
+      var decodedToken = this.jwtHelperService.decodeToken(accessToken);
+      this.roles = decodedToken['https://carsale.com/roles'];
+
 
       if(!self.profile){
       this.auth0.client.userInfo(accessToken, (err, profile) => { 
-      debugger;
-      
+
       localStorage.setItem('profile', JSON.stringify(profile))
       self.profile = profile;
       //cb(err, profile);
@@ -41,6 +46,10 @@ export class AuthService {
       }
     }
 
+  }
+
+  public isInRole(roleName){
+     return this.roles.indexOf(roleName) > -1;
   }
 
   public login(): void {
@@ -80,6 +89,7 @@ export class AuthService {
         localStorage.removeItem('id_token');
         localStorage.removeItem('profile');
         localStorage.removeItem('expires_at');
+        this.roles = [];
         // Go back to the home route
         this.router.navigate(['/']);
       }
